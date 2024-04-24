@@ -26,8 +26,7 @@ export const sendForm = async (formData: any) => {
 
   try {
     const command = new PutObjectCommand(uploadParams);
-    const uploadResult = await s3.send(command);
-    console.log('Upload success:', uploadResult);
+    await s3.send(command);
     const imageUrl = `https://${S3_BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
     return imageUrl;
   } catch (err) {

@@ -20,8 +20,8 @@ export const useImageForm = () => {
       const formData = new FormData();
       formData.append('filename', filename);
       formData.append('file', file[0]);
-
-      sendForm(formData);
+      const res =await sendForm(formData);
+      return res;
     },
     []
   );
