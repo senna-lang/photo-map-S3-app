@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "types": "npx supabase gen types typescript --project-id nefsbkmynvngpmjyrgld --schema public > src/common/types/supabase.ts"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.556.0",
