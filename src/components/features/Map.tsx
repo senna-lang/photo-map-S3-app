@@ -2,18 +2,16 @@
 
 import Map from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Marker, Popup } from 'react-map-gl';
-import { useState } from 'react';
+import { useRef,useState } from 'react';
 import { Album, LngLat } from '@/common/types/types';
+import { Marker } from 'react-map-gl';
+import GeoMarker from '../elements/Marker';
 
-const Mapbox = ({ album }: { album: Album }) => {
+const Mapbox = ({ album }: { album: Album[] | null }) => {
   const [lngLat, setLngLat] = useState<LngLat>({
     lng: null,
     lat: null,
   });
-  const [showPopup, setShowPopup] = useState<boolean>(true);
-
-  // console.log(lngLat)
 
   const markedMap = (e: any) => {
     setLngLat({ ...lngLat, lng: e.lngLat.lng, lat: e.lngLat.lat });
@@ -32,13 +30,8 @@ const Mapbox = ({ album }: { album: Album }) => {
       mapStyle="mapbox://styles/senna-lang/clvaj709a00p901q13orl1h14"
       mapboxAccessToken={process.env.NEXT_PUBLIC_MAP_BOX_ACCESS_KEY}
     >
-      {album?.map(data => (
-        <Marker
-          longitude={data.coordinate!.lng}
-          latitude={data.coordinate!.lat}
-          anchor="bottom"
-          onClick={() => setShowPopup(true)}
-        />
+      {album?.map((data: Album) => (
+        <GeoMarker data={data} key={data.id} />
       ))}
       {/* <Marker
         longitude={lngLat.lng!}
@@ -50,16 +43,3 @@ const Mapbox = ({ album }: { album: Album }) => {
 };
 
 export default Mapbox;
-
-{
-  /* {showPopup && (
-  <Popup
-    longitude={137.760725}
-    latitude={38.152981}
-    anchor="bottom"
-    onClose={() => setShowPopup(false)}
-  >
-    You are here
-  </Popup>
-)} */
-}
