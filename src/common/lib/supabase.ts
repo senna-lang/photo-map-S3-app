@@ -4,6 +4,7 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { Database } from '../types/supabase';
+import { extractDate } from './utils';
 
 export const supabaseServer = () => {
   cookies().getAll();
@@ -14,7 +15,8 @@ export const getAllAlbum = async (supabase: SupabaseClient<Database>) => {
   const { data } = await supabase.from('album').select();
   const res = data!.map(data => {
     const coordinate = JSON.parse(data.coordinate!);
-    const newObj = { ...data, coordinate };
+    const created_at = extractDate(data.created_at);
+    const newObj = { ...data, coordinate, created_at };
     return newObj;
   });
   return res;
