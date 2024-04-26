@@ -11,6 +11,7 @@ const ACCEPTED_IMAGE_TYPE = [
 
 export const formSchema = z.object({
   filename: z.string().min(2, { message: '２文字以上で入力してください。' }),
+  coordinate:z.string(),
   file: z
     .custom<FileList>()
     .refine(files => files?.length > 0, '画像ファイルが必要です。')
