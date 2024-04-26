@@ -21,3 +21,17 @@ export const getAllAlbum = async (supabase: SupabaseClient<Database>) => {
   });
   return res;
 };
+
+export const insertAlbum = async (
+  supabase: SupabaseClient<Database>,
+  coordinate: string,
+  image_url: string
+) => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const res = await supabase
+    .from('album')
+    .insert({ coordinate, image_url, user_id: user?.id });
+    console.log(res)
+};
