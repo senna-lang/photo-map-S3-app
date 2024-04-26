@@ -6,9 +6,9 @@ export type Album = {
   coordinate: {
     lng: number;
     lat: number;
-  } | null;
+  } ;
   created_at: string;
   id: number;
-  image_url: string | null;
-  user_id: string | null;
+  image_url: string ;
+  user_id: string;
 };
