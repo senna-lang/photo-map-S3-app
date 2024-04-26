@@ -2,14 +2,13 @@
 
 import Map from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useRef, useState } from 'react';
 import { Album, LngLat } from '@/common/types/types';
 import { Marker } from 'react-map-gl';
 import GeoMarker from '../elements/Marker';
 import { useStore } from '@/common/store/store';
 
 const Mapbox = ({ album }: { album: Album[] | null }) => {
-  const { coordinate, updateCoordinate } = useStore();
+  const { coordinate, updateCoordinate,showPinnedMarker } = useStore();
 
   return (
     <Map
@@ -27,11 +26,11 @@ const Mapbox = ({ album }: { album: Album[] | null }) => {
       {album?.map((data: Album) => (
         <GeoMarker data={data} key={data.id} />
       ))}
-      <Marker
+      {showPinnedMarker&&(<Marker
         longitude={coordinate.lng!}
         latitude={coordinate.lat!}
         anchor="bottom"
-      />
+      />)}     
     </Map>
   );
 };
