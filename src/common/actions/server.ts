@@ -1,10 +1,13 @@
 'use server';
 
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
+import { insertAlbum, supabaseServer } from '../lib/supabase';
 
 export const sendForm = async (formData: any) => {
+  const supabase = supabaseServer();
   const fileName = formData.get('filename');
   const imageFile = formData.get('file') as File;
+  const coordinate = formData.get('coordinate');
   const buffer = Buffer.from(await imageFile.arrayBuffer());
   const { ACCESS_KEY_ID, SECRET_ACCESS_KEY_ID, REGION, S3_BUCKET_NAME } =
     process.env;
@@ -28,7 +31,7 @@ export const sendForm = async (formData: any) => {
     const command = new PutObjectCommand(uploadParams);
     await s3.send(command);
     const imageUrl = `https://${S3_BUCKET_NAME}.s3.${REGION}.amazonaws.com/${fileName}`;
-    return imageUrl;
+    await insertAlbum(supabase, coordinate, imageUrl);
   } catch (err) {
     return console.error(err);
   }
