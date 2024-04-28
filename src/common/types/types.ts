@@ -9,6 +9,6 @@ export type Album = {
   } ;
   created_at: string;
   id: number;
-  image_url: string ;
+  image_url: string[] ;
   user_id: string;
 };

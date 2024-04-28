@@ -34,7 +34,7 @@ const GeoMarker = ({ data }: { data: Album }) => {
               src={data.image_url!}
               alt={data.created_at}
             /> */}
-            <StandardImageList />
+            <StandardImageList images={data.image_url}/>
           </div>
         </Popup>
       )}

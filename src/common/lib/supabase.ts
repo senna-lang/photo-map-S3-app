@@ -25,7 +25,7 @@ export const getAllAlbum = async (supabase: SupabaseClient<Database>) => {
 export const insertAlbum = async (
   supabase: SupabaseClient<Database>,
   coordinate: string,
-  image_url: string
+  image_url: string[]
 ) => {
   const {
     data: { user },

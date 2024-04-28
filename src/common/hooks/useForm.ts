@@ -18,10 +18,15 @@ export const useImageForm = () => {
   const onSubmit: SubmitHandler<z.infer<typeof formSchema>> = useCallback(
     async values => {
       const { filename, file, coordinate } = values;
+      const fileArray = Array.from(file);
       const formData = new FormData();
       formData.append('filename', filename);
       formData.append('coordinate', coordinate);
-      formData.append('file', file[0]);
+      fileArray.map(file => {
+        formData.append('file', file);
+      });
+      const imageFile = formData.getAll('file');
+      // console.log(imageFile);
       const res = await sendForm(formData);
       return res;
     },

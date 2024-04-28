@@ -1,11 +1,3 @@
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
-
 export type Database = {
   public: {
     Tables: {
@@ -14,21 +6,21 @@ export type Database = {
           coordinate: string
           created_at: string
           id: number
-          image_url: string
+          image_url: string[]
           user_id: string
         }
         Insert: {
           coordinate: string
           created_at?: string
           id?: number
-          image_url: string
+          image_url: string[]
           user_id?: string
         }
         Update: {
           coordinate?: string
           created_at?: string
           id?: number
-          image_url?: string
+          image_url?: string[]
           user_id?: string
         }
         Relationships: [

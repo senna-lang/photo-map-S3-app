@@ -61,6 +61,7 @@ const ImageForm = () => {
               <FormControl>
                 <Input
                   type="file"
+                  multiple
                   accept="image/*"
                   placeholder="image"
                   onChange={e => {
