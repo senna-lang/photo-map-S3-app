@@ -35,3 +35,10 @@ export const insertAlbum = async (
     .insert({ coordinate, image_url, user_id: user?.id });
     console.log(res)
 };
+export const deleteAlbum = async (
+  supabase: SupabaseClient<Database>,
+  id: number
+) => {
+  const res = await supabase.from('album').delete().eq('id', id);
+  return res;
+};

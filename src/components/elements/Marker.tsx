@@ -4,6 +4,9 @@ import { Album } from '@/common/types/types';
 import { useState } from 'react';
 import { Popup, Marker } from 'react-map-gl';
 import StandardImageList from '../layouts/ImageList';
+import { Button } from '../ui/button';
+import { deleteAlbum } from '@/common/lib/supabase';
+
 
 const GeoMarker = ({ data }: { data: Album }) => {
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -28,6 +31,7 @@ const GeoMarker = ({ data }: { data: Album }) => {
           <div className=" h-auto w-auto">
             <h1>{data.created_at}</h1>
             <StandardImageList images={data.image_url} />
+           
           </div>
         </Popup>
       )}

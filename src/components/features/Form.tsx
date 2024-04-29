@@ -45,7 +45,7 @@ const ImageForm = () => {
                 <Input
                   placeholder="shadcn"
                   {...field}
-                  value={stringCoordinate}
+                  value={`緯度：${coordinate.lat}  経度：${coordinate.lng}`}
                 />
               </FormControl>
               <FormMessage />

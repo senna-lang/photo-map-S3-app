@@ -26,7 +26,6 @@ export const useImageForm = () => {
         formData.append('file', file);
       });
       const imageFile = formData.getAll('file');
-      // console.log(imageFile);
       const res = await sendForm(formData);
       return res;
     },
