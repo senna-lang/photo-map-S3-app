@@ -1,4 +1,5 @@
-import { getAllAlbum, supabaseServer } from '@/common/lib/supabase';
+import { getAllAlbum } from '@/common/lib/supabase';
+import { supabaseServer } from '@/common/lib/supabaseServerClient';
 import Mapbox from '@/components/features/Map';
 
 export default async function Home() {

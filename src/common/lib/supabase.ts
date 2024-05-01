@@ -2,14 +2,10 @@ import {
   SupabaseClient,
   createServerComponentClient,
 } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
 import { Database } from '../types/supabase';
 import { extractDate } from './utils';
 
-export const supabaseServer = () => {
-  cookies().getAll();
-  return createServerComponentClient<Database>({ cookies });
-};
+
 
 export const getAllAlbum = async (supabase: SupabaseClient<Database>) => {
   const { data } = await supabase.from('album').select();
@@ -40,5 +36,6 @@ export const deleteAlbum = async (
   id: number
 ) => {
   const res = await supabase.from('album').delete().eq('id', id);
+  console.log(res)
   return res;
 };
