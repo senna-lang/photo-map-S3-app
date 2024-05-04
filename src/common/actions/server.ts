@@ -1,7 +1,8 @@
 'use server';
 
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
-import { insertAlbum, supabaseServer } from '../lib/supabase';
+import { insertAlbum } from '../lib/supabase';
+import { supabaseServer } from '../lib/supabaseServerClient';
 
 export const sendForm = async (formData: any) => {
   const supabase = supabaseServer();
