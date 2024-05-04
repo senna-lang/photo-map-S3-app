@@ -4,10 +4,11 @@ import {
 } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../types/supabase';
 import { extractDate } from './utils';
+import { Album } from '../types/types';
 
-
-
-export const getAllAlbum = async (supabase: SupabaseClient<Database>) => {
+export const getAllAlbum = async (
+  supabase: SupabaseClient<Database>
+): Promise<Album[]> => {
   const { data } = await supabase.from('album').select();
   const res = data!.map(data => {
     const coordinate = JSON.parse(data.coordinate!);
@@ -22,20 +23,20 @@ export const insertAlbum = async (
   supabase: SupabaseClient<Database>,
   coordinate: string,
   image_url: string[]
-) => {
+): Promise<void> => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
   const res = await supabase
     .from('album')
     .insert({ coordinate, image_url, user_id: user?.id });
-    console.log(res)
+  console.log(res);
 };
+
 export const deleteAlbum = async (
   supabase: SupabaseClient<Database>,
   id: number
-) => {
+): Promise<void> => {
   const res = await supabase.from('album').delete().eq('id', id);
-  console.log(res)
-  return res;
+  console.log(res);
 };
