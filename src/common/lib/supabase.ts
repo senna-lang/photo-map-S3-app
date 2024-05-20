@@ -1,6 +1,5 @@
 import {
   SupabaseClient,
-  createServerComponentClient,
 } from '@supabase/auth-helpers-nextjs';
 import { Database } from '../types/supabase';
 import { extractDate } from './utils';
