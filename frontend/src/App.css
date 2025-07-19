@@ -1,0 +1,16 @@
+@import 'mapbox-gl/dist/mapbox-gl.css';
+
+#root {
+  min-height: 100vh;
+}
+
+/* Custom styles for the app */
+.mapboxgl-popup-content {
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.mapboxgl-popup-close-button {
+  font-size: 18px;
+  padding: 8px;
+}
