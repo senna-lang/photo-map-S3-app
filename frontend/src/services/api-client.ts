@@ -1,10 +1,4 @@
-import { hc } from 'hono/client';
-import type { AppType } from '../../../backend/src/presentation/app';
-
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001';
-
-// Create type-safe Hono client
-const client = hc<AppType>(API_BASE_URL);
 
 // Auth token management
 let authToken: string | null = null;
@@ -25,15 +19,27 @@ export const getAuthToken = (): string | null => {
   return authToken;
 };
 
-// Create authenticated client
-const createAuthenticatedClient = () => {
+// Generic API fetch function
+const apiRequest = async (endpoint: string, options: RequestInit = {}) => {
   const token = getAuthToken();
   
-  return hc<AppType>(API_BASE_URL, {
-    headers: token ? {
-      'Authorization': `Bearer ${token}`,
-    } : {},
-  });
+  const config: RequestInit = {
+    ...options,
+    headers: {
+      'Content-Type': 'application/json',
+      ...(token && { 'Authorization': `Bearer ${token}` }),
+      ...options.headers,
+    },
+  };
+
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, config);
+  
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ error: 'Request failed' }));
+    throw new Error(error.error || `HTTP ${response.status}`);
+  }
+  
+  return response.json();
 };
 
 // Export API methods
@@ -41,95 +47,50 @@ export const api = {
   // Album methods
   albums: {
     getAll: async () => {
-      const response = await client.api.albums.$get();
-      if (!response.ok) {
-        throw new Error('Failed to fetch albums');
-      }
-      return await response.json();
+      return apiRequest('/api/albums');
     },
     
     create: async (data: { coordinate: { lng: number; lat: number }; imageUrls: string[] }) => {
-      const authClient = createAuthenticatedClient();
-      const response = await authClient.api.albums.$post({
-        json: data,
+      return apiRequest('/api/albums', {
+        method: 'POST',
+        body: JSON.stringify(data),
       });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to create album');
-      }
-      
-      return await response.json();
     },
     
     delete: async (id: string) => {
-      const authClient = createAuthenticatedClient();
-      const response = await authClient.api.albums[':id'].$delete({
-        param: { id },
+      return apiRequest(`/api/albums/${id}`, {
+        method: 'DELETE',
       });
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to delete album');
-      }
-      
-      return await response.json();
     },
   },
   
   // Auth methods
   auth: {
     getGithubUrl: async () => {
-      const response = await client.api.auth.github.$get();
-      if (!response.ok) {
-        throw new Error('Failed to get GitHub auth URL');
-      }
-      return await response.json();
+      return apiRequest('/api/auth/github');
     },
     
     signIn: async (code: string) => {
-      const response = await client.api.auth.signin.$post({
-        json: { provider: 'github', code },
+      const result = await apiRequest('/api/auth/signin', {
+        method: 'POST',
+        body: JSON.stringify({ provider: 'github', code }),
       });
       
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Authentication failed');
-      }
-      
-      const result = await response.json();
       setAuthToken(result.accessToken);
       return result;
     },
     
     getCurrentUser: async () => {
-      const authClient = createAuthenticatedClient();
-      const response = await authClient.api.auth.me.$get();
-      
-      if (!response.ok) {
-        if (response.status === 401) {
-          setAuthToken(null);
-          throw new Error('Authentication required');
-        }
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to get current user');
-      }
-      
-      return await response.json();
+      return apiRequest('/api/auth/me');
     },
     
     signOut: async () => {
-      const authClient = createAuthenticatedClient();
-      const response = await authClient.api.auth.signout.$post();
+      const result = await apiRequest('/api/auth/signout', {
+        method: 'POST',
+      });
       
       setAuthToken(null);
-      
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.error || 'Failed to sign out');
-      }
-      
-      return await response.json();
+      return result;
     },
   },
 };

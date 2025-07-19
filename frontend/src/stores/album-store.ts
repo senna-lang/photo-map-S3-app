@@ -30,7 +30,7 @@ interface AlbumActions {
   clearError: () => void;
 }
 
-export const useAlbumStore = create<AlbumState & AlbumActions>((set, get) => ({
+export const useAlbumStore = create<AlbumState & AlbumActions>((set) => ({
   albums: [],
   selectedCoordinate: null,
   showPinnedMarker: false,
