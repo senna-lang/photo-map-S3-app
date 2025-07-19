@@ -1,37 +1,102 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Photo Map S3 Application
 
-## Getting Started
+A modern photo mapping application built with a monorepo architecture, allowing users to upload photos with location data and view them on an interactive map.
 
-First, run the development server:
+## Architecture
+
+This project has been migrated from Next.js + Supabase to a custom implementation with:
+- **Backend**: Hono with Domain-Driven Design (DDD)
+- **Frontend**: Vite + React SPA
+- **Database**: Drizzle ORM + PostgreSQL
+- **Authentication**: JWT + GitHub OAuth
+- **Type Safety**: End-to-end with Hono RPC
+
+## Quick Start
+
+### Prerequisites
+- Node.js 20+
+- PostgreSQL database
+- GitHub OAuth app
+- Mapbox account
+- AWS S3 bucket (optional)
+
+### Installation
 
 ```bash
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env
+
+# Configure your environment variables in the .env files
+
+# Run database migrations
+npm run db:migrate --workspace=backend
+
+# Start development servers
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:3001
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+- 🗺️ Interactive map with Mapbox GL
+- 📸 Photo album creation with location tagging
+- 🔐 GitHub OAuth authentication
+- 📱 Responsive design
+- ⚡ Real-time updates
+- 🔒 Ownership-based access control
+- 🎯 Type-safe API communication
 
-## Learn More
+## Technology Stack
 
-To learn more about Next.js, take a look at the following resources:
+### Backend
+- **Hono**: Fast web framework with RPC
+- **Drizzle ORM**: Type-safe database operations
+- **PostgreSQL**: Primary database
+- **JWT**: Authentication tokens
+- **neverthrow**: Functional error handling
+- **Zod**: Schema validation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Frontend
+- **Vite**: Build tool and dev server
+- **React**: UI framework
+- **TypeScript**: Type safety
+- **Zustand**: State management
+- **Tailwind CSS**: Styling
+- **React Hook Form**: Form handling
+- **Mapbox GL**: Interactive maps
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Development
 
-## Deploy on Vercel
+### Monorepo Structure
+```
+├── backend/          # Hono API server
+├── frontend/         # Vite React application
+├── package.json      # Root workspace configuration
+└── README.md
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Available Scripts
+- `npm run dev` - Start both frontend and backend
+- `npm run build` - Build both applications
+- `npm run lint` - Lint all code
+- `npm run clean` - Clean build artifacts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-# Photo-map-S3-app
+See [CLAUDE.md](./CLAUDE.md) for detailed development guidance.
+
+## Deployment
+
+The application can be deployed to any platform supporting Node.js:
+- Backend: Deploy to services like Railway, Render, or AWS
+- Frontend: Deploy to Vercel, Netlify, or any static hosting
+- Database: Use managed PostgreSQL from your cloud provider
+
+## License
+
+This project is private and not licensed for public use.

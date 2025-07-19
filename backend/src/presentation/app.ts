@@ -1,11 +1,6 @@
 import { Hono } from 'hono';
 import { cors } from 'hono/cors';
 import { logger } from 'hono/logger';
-import { albums } from './routes/albums.js';
-import { auth } from './routes/auth.js';
-import { createAuthMiddleware } from './middleware/auth-middleware.js';
-import { injectDependencies } from './middleware/dependency-injection.js';
-import { Container } from '../shared/container.js';
 
 const app = new Hono();
 
@@ -18,17 +13,6 @@ app.use('*', cors({
 }));
 
 app.use('*', logger());
-
-// Inject dependencies into all routes
-app.use('*', injectDependencies());
-
-// Apply auth middleware (optional auth for public routes)
-const container = Container.getInstance();
-app.use('*', createAuthMiddleware(container.jwtService));
-
-// Mount route handlers
-app.route('/api/albums', albums);
-app.route('/api/auth', auth);
 
 // Health check endpoint
 app.get('/health', (c) => {
@@ -66,10 +50,8 @@ app.notFound((c) => {
   return c.json({ error: 'Not Found' }, 404);
 });
 
-// Export individual route types for better type safety
-const routes = app
-  .route('/api/albums', albums)
-  .route('/api/auth', auth);
+// Export the app for now (we'll add routes later)
+const routes = app;
 
 export default app;
 export type AppType = typeof routes;
