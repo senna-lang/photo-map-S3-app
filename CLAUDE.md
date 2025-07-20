@@ -9,6 +9,7 @@ This is a monorepo photo mapping application that allows users to upload photos 
 ## Development Commands
 
 ### Root Commands
+
 - `npm run dev` - Start both frontend and backend concurrently
 - `npm run dev:frontend` - Start only the frontend (Vite dev server on port 3000)
 - `npm run dev:backend` - Start only the backend (Hono server on port 3001)
@@ -17,18 +18,21 @@ This is a monorepo photo mapping application that allows users to upload photos 
 - `npm run clean` - Clean build artifacts
 
 ### Backend Commands
+
 - `npm run build --workspace=backend` - Build backend TypeScript
 - `npm run db:generate --workspace=backend` - Generate Drizzle migrations
 - `npm run db:migrate --workspace=backend` - Run database migrations
 - `npm run db:studio --workspace=backend` - Open Drizzle Studio
 
 ### Frontend Commands
+
 - `npm run build --workspace=frontend` - Build frontend for production
 - `npm run preview --workspace=frontend` - Preview production build
 
 ## Architecture
 
 ### Monorepo Structure
+
 ```
 ├── backend/                  # Hono API with Domain-Driven Design
 │   ├── src/
@@ -52,6 +56,7 @@ This is a monorepo photo mapping application that allows users to upload photos 
 ### Technology Stack
 
 #### Backend (Domain-Driven Design)
+
 - **Framework**: Hono with native RPC for type-safe API communication
 - **Database**: Drizzle ORM with PostgreSQL
 - **Authentication**: JWT-based auth with GitHub OAuth
@@ -60,6 +65,7 @@ This is a monorepo photo mapping application that allows users to upload photos 
 - **Architecture**: Clean Architecture with DDD principles
 
 #### Frontend (Single Page Application)
+
 - **Framework**: Vite + React + TypeScript
 - **State Management**: Zustand stores for auth and albums
 - **Styling**: Tailwind CSS with shadcn/ui components
@@ -70,18 +76,21 @@ This is a monorepo photo mapping application that allows users to upload photos 
 ### Key Features
 
 **Authentication Flow:**
+
 1. GitHub OAuth integration through backend
 2. JWT token-based session management
 3. Persistent auth state with localStorage
 4. Protected routes and API endpoints
 
 **Album Management:**
+
 1. Interactive map for coordinate selection
 2. Multi-image upload with S3 integration
 3. Real-time album creation and deletion
 4. Ownership-based access control
 
 **Type Safety:**
+
 1. End-to-end type safety from backend to frontend
 2. Shared Zod schemas for validation
 3. Hono RPC provides automatic type inference
@@ -90,6 +99,7 @@ This is a monorepo photo mapping application that allows users to upload photos 
 ### Environment Configuration
 
 #### Backend (.env)
+
 ```
 DATABASE_URL=postgresql://localhost:5432/photo_map_dev
 JWT_SECRET=your-jwt-secret
@@ -103,6 +113,7 @@ S3_BUCKET_NAME=your-s3-bucket
 ```
 
 #### Frontend (.env)
+
 ```
 VITE_MAPBOX_ACCESS_TOKEN=your-mapbox-token
 VITE_API_BASE_URL=http://localhost:3001

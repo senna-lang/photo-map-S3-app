@@ -25,10 +25,10 @@ This feature involves restructuring the current Next.js frontend project into a 
 #### Acceptance Criteria
 
 1. WHEN the backend is implemented THEN the system SHALL use Hono framework for HTTP routing and middleware
-2. WHEN the backend architecture is designed THEN the system SHALL follow Domain-Driven Design (DDD) principles with clear domain boundaries
+2. ✅ WHEN the backend architecture is designed THEN the system SHALL follow Domain-Driven Design (DDD) principles with clear domain boundaries (COMPLETED: Domain layer implemented with entities, value objects, and repository interfaces)
 3. WHEN API endpoints are created THEN the system SHALL replicate all existing Supabase functionality
 4. WHEN authentication is implemented THEN the system SHALL maintain user session management equivalent to current Supabase auth
-5. WHEN database operations are performed THEN the system SHALL use Drizzle ORM with TypeScript for type-safe database queries
+5. 🔄 WHEN database operations are performed THEN the system SHALL use Drizzle ORM with TypeScript for type-safe database queries (IN PROGRESS: Repository interfaces defined, implementation pending)
 6. IF the backend receives requests THEN the system SHALL handle CORS appropriately for the frontend
 
 ### Requirement 3
