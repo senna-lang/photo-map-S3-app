@@ -5,7 +5,6 @@
 
 export abstract class DomainError extends Error {
   abstract readonly code: string;
-  abstract readonly message: string;
 }
 
 /**
@@ -23,7 +22,7 @@ export class ValidationError extends DomainError {
 /**
  * 座標の範囲エラー
  */
-export class CoordinateOutOfBoundsError extends ValidationError {
+export class CoordinateOutOfBoundsError extends DomainError {
   readonly code = 'COORDINATE_OUT_OF_BOUNDS';
   
   constructor(coordinate: string, value: number, min: number, max: number) {
@@ -35,7 +34,7 @@ export class CoordinateOutOfBoundsError extends ValidationError {
 /**
  * 無効なURL形式エラー
  */
-export class InvalidUrlFormatError extends ValidationError {
+export class InvalidUrlFormatError extends DomainError {
   readonly code = 'INVALID_URL_FORMAT';
   
   constructor(url: string) {

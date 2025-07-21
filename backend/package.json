@@ -12,8 +12,12 @@
     "lint": "eslint src --ext .ts",
     "test": "vitest",
     "test:watch": "vitest --watch",
-    "db:generate": "drizzle-kit generate:pg",
+    "db:generate": "drizzle-kit generate",
     "db:migrate": "tsx src/infrastructure/database/migrate.ts",
+    "db:seed": "tsx src/infrastructure/database/seed.ts",
+    "db:seed:clear": "tsx src/infrastructure/database/seed.ts clear",
+    "db:seed:stats": "tsx src/infrastructure/database/seed.ts stats",
+    "db:test": "tsx src/infrastructure/database/migrate.ts test",
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
