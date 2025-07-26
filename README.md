@@ -5,6 +5,7 @@ A modern photo mapping application built with a monorepo architecture, allowing 
 ## Architecture
 
 This project has been migrated from Next.js + Supabase to a custom implementation with:
+
 - **Backend**: Hono with Domain-Driven Design (DDD)
 - **Frontend**: Vite + React SPA
 - **Database**: Drizzle ORM + PostgreSQL
@@ -14,6 +15,7 @@ This project has been migrated from Next.js + Supabase to a custom implementatio
 ## Quick Start
 
 ### Prerequisites
+
 - Node.js 20+
 - PostgreSQL database
 - GitHub OAuth app
@@ -40,6 +42,7 @@ npm run dev
 ```
 
 The application will be available at:
+
 - Frontend: http://localhost:3000
 - Backend API: http://localhost:3001
 
@@ -56,6 +59,7 @@ The application will be available at:
 ## Technology Stack
 
 ### Backend
+
 - **Hono**: Fast web framework with RPC
 - **Drizzle ORM**: Type-safe database operations
 - **PostgreSQL**: Primary database
@@ -64,6 +68,7 @@ The application will be available at:
 - **Zod**: Schema validation
 
 ### Frontend
+
 - **Vite**: Build tool and dev server
 - **React**: UI framework
 - **TypeScript**: Type safety
@@ -75,6 +80,7 @@ The application will be available at:
 ## Development
 
 ### Monorepo Structure
+
 ```
 ├── backend/          # Hono API server
 ├── frontend/         # Vite React application
@@ -83,6 +89,7 @@ The application will be available at:
 ```
 
 ### Available Scripts
+
 - `npm run dev` - Start both frontend and backend
 - `npm run build` - Build both applications
 - `npm run lint` - Lint all code
@@ -93,6 +100,7 @@ See [CLAUDE.md](./CLAUDE.md) for detailed development guidance.
 ## Deployment
 
 The application can be deployed to any platform supporting Node.js:
+
 - Backend: Deploy to services like Railway, Render, or AWS
 - Frontend: Deploy to Vercel, Netlify, or any static hosting
 - Database: Use managed PostgreSQL from your cloud provider

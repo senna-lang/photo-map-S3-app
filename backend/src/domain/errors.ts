@@ -12,7 +12,7 @@ export abstract class DomainError extends Error {
  */
 export class ValidationError extends DomainError {
   readonly code = 'VALIDATION_ERROR';
-  
+
   constructor(message: string) {
     super(message);
     this.name = 'ValidationError';
@@ -24,9 +24,11 @@ export class ValidationError extends DomainError {
  */
 export class CoordinateOutOfBoundsError extends DomainError {
   readonly code = 'COORDINATE_OUT_OF_BOUNDS';
-  
+
   constructor(coordinate: string, value: number, min: number, max: number) {
-    super(`${coordinate} ${value} is out of bounds. Must be between ${min} and ${max}`);
+    super(
+      `${coordinate} ${value} is out of bounds. Must be between ${min} and ${max}`
+    );
     this.name = 'CoordinateOutOfBoundsError';
   }
 }
@@ -36,7 +38,7 @@ export class CoordinateOutOfBoundsError extends DomainError {
  */
 export class InvalidUrlFormatError extends DomainError {
   readonly code = 'INVALID_URL_FORMAT';
-  
+
   constructor(url: string) {
     super(`Invalid URL format: ${url}`);
     this.name = 'InvalidUrlFormatError';
@@ -48,7 +50,7 @@ export class InvalidUrlFormatError extends DomainError {
  */
 export class EntityValidationError extends DomainError {
   readonly code = 'ENTITY_VALIDATION_ERROR';
-  
+
   constructor(entityName: string, message: string) {
     super(`${entityName} validation failed: ${message}`);
     this.name = 'EntityValidationError';
@@ -60,7 +62,7 @@ export class EntityValidationError extends DomainError {
  */
 export class EntityNotFoundError extends DomainError {
   readonly code = 'ENTITY_NOT_FOUND';
-  
+
   constructor(entityName: string, id: string) {
     super(`${entityName} with id ${id} not found`);
     this.name = 'EntityNotFoundError';
@@ -72,7 +74,7 @@ export class EntityNotFoundError extends DomainError {
  */
 export class UnauthorizedError extends DomainError {
   readonly code = 'UNAUTHORIZED';
-  
+
   constructor(message: string = 'Unauthorized access') {
     super(message);
     this.name = 'UnauthorizedError';

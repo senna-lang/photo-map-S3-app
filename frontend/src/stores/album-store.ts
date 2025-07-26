@@ -23,9 +23,14 @@ interface AlbumState {
 
 interface AlbumActions {
   fetchAlbums: () => Promise<void>;
-  createAlbum: (data: { coordinate: { lng: number; lat: number }; imageUrls: string[] }) => Promise<Album>;
+  createAlbum: (data: {
+    coordinate: { lng: number; lat: number };
+    imageUrls: string[];
+  }) => Promise<Album>;
   deleteAlbum: (id: string) => Promise<void>;
-  setSelectedCoordinate: (coordinate: { lng: number; lat: number } | null) => void;
+  setSelectedCoordinate: (
+    coordinate: { lng: number; lat: number } | null
+  ) => void;
   setShowPinnedMarker: (show: boolean) => void;
   clearError: () => void;
 }
@@ -39,7 +44,7 @@ export const useAlbumStore = create<AlbumState & AlbumActions>((set) => ({
 
   fetchAlbums: async () => {
     set({ isLoading: true, error: null });
-    
+
     try {
       const albums = await api.albums.getAll();
       set({
@@ -50,14 +55,15 @@ export const useAlbumStore = create<AlbumState & AlbumActions>((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to fetch albums',
+        error:
+          error instanceof Error ? error.message : 'Failed to fetch albums',
       });
     }
   },
 
   createAlbum: async (data) => {
     set({ isLoading: true, error: null });
-    
+
     try {
       const newAlbum = await api.albums.create(data);
       set((state) => ({
@@ -71,7 +77,8 @@ export const useAlbumStore = create<AlbumState & AlbumActions>((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to create album',
+        error:
+          error instanceof Error ? error.message : 'Failed to create album',
       });
       throw error;
     }
@@ -79,18 +86,19 @@ export const useAlbumStore = create<AlbumState & AlbumActions>((set) => ({
 
   deleteAlbum: async (id) => {
     set({ isLoading: true, error: null });
-    
+
     try {
       await api.albums.delete(id);
       set((state) => ({
-        albums: state.albums.filter(album => album.id !== id),
+        albums: state.albums.filter((album) => album.id !== id),
         isLoading: false,
         error: null,
       }));
     } catch (error) {
       set({
         isLoading: false,
-        error: error instanceof Error ? error.message : 'Failed to delete album',
+        error:
+          error instanceof Error ? error.message : 'Failed to delete album',
       });
       throw error;
     }

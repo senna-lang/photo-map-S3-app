@@ -55,7 +55,9 @@ describe('Album', () => {
       expect(result.isErr()).toBe(true);
       if (result.isErr()) {
         expect(result.error).toBeInstanceOf(EntityValidationError);
-        expect(result.error.message).toContain('At least one image is required');
+        expect(result.error.message).toContain(
+          'At least one image is required'
+        );
       }
     });
 
@@ -69,7 +71,9 @@ describe('Album', () => {
       expect(result.isErr()).toBe(true);
       if (result.isErr()) {
         expect(result.error).toBeInstanceOf(EntityValidationError);
-        expect(result.error.message).toContain('Maximum 10 images allowed per album');
+        expect(result.error.message).toContain(
+          'Maximum 10 images allowed per album'
+        );
       }
     });
 
@@ -86,7 +90,9 @@ describe('Album', () => {
       expect(result.isErr()).toBe(true);
       if (result.isErr()) {
         expect(result.error).toBeInstanceOf(EntityValidationError);
-        expect(result.error.message).toContain('Duplicate image URLs are not allowed');
+        expect(result.error.message).toContain(
+          'Duplicate image URLs are not allowed'
+        );
       }
     });
 
@@ -100,7 +106,9 @@ describe('Album', () => {
       expect(result.isOk()).toBe(true);
       if (result.isOk()) {
         expect(result.value.id.value).toBeDefined();
-        expect(result.value.id.value).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+        expect(result.value.id.value).toMatch(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+        );
       }
     });
   });
@@ -114,7 +122,9 @@ describe('Album', () => {
       if (result.isErr()) throw result.error;
       const album = result.value;
 
-      const newImageUrlResult = ImageUrl.create('https://example.com/new-image.jpg');
+      const newImageUrlResult = ImageUrl.create(
+        'https://example.com/new-image.jpg'
+      );
       if (newImageUrlResult.isErr()) throw newImageUrlResult.error;
       const newImageUrl = newImageUrlResult.value;
       const addResult = album.addImage(newImageUrl, userId);
@@ -133,7 +143,9 @@ describe('Album', () => {
       if (result.isErr()) throw result.error;
       const album = result.value;
 
-      const newImageUrlResult = ImageUrl.create('https://example.com/new-image.jpg');
+      const newImageUrlResult = ImageUrl.create(
+        'https://example.com/new-image.jpg'
+      );
       if (newImageUrlResult.isErr()) throw newImageUrlResult.error;
       const newImageUrl = newImageUrlResult.value;
       const addResult = album.addImage(newImageUrl, otherUserId);
@@ -141,7 +153,9 @@ describe('Album', () => {
       expect(addResult.isErr()).toBe(true);
       if (addResult.isErr()) {
         expect(addResult.error).toBeInstanceOf(UnauthorizedError);
-        expect(addResult.error.message).toContain('Only the album owner can add images');
+        expect(addResult.error.message).toContain(
+          'Only the album owner can add images'
+        );
       }
     });
 
@@ -153,7 +167,9 @@ describe('Album', () => {
       if (result.isErr()) throw result.error;
       const album = result.value;
 
-      const newImageUrlResult = ImageUrl.create('https://example.com/new-image.jpg');
+      const newImageUrlResult = ImageUrl.create(
+        'https://example.com/new-image.jpg'
+      );
       if (newImageUrlResult.isErr()) throw newImageUrlResult.error;
       const newImageUrl = newImageUrlResult.value;
       const addResult = album.addImage(newImageUrl, userId);
@@ -161,7 +177,9 @@ describe('Album', () => {
       expect(addResult.isErr()).toBe(true);
       if (addResult.isErr()) {
         expect(addResult.error).toBeInstanceOf(EntityValidationError);
-        expect(addResult.error.message).toContain('Maximum 10 images allowed per album');
+        expect(addResult.error.message).toContain(
+          'Maximum 10 images allowed per album'
+        );
       }
     });
 
@@ -179,7 +197,9 @@ describe('Album', () => {
       expect(addResult.isErr()).toBe(true);
       if (addResult.isErr()) {
         expect(addResult.error).toBeInstanceOf(EntityValidationError);
-        expect(addResult.error.message).toContain('Image URL already exists in album');
+        expect(addResult.error.message).toContain(
+          'Image URL already exists in album'
+        );
       }
     });
   });
@@ -216,7 +236,9 @@ describe('Album', () => {
       expect(removeResult.isErr()).toBe(true);
       if (removeResult.isErr()) {
         expect(removeResult.error).toBeInstanceOf(UnauthorizedError);
-        expect(removeResult.error.message).toContain('Only the album owner can remove images');
+        expect(removeResult.error.message).toContain(
+          'Only the album owner can remove images'
+        );
       }
     });
 
@@ -234,7 +256,9 @@ describe('Album', () => {
       expect(removeResult.isErr()).toBe(true);
       if (removeResult.isErr()) {
         expect(removeResult.error).toBeInstanceOf(EntityValidationError);
-        expect(removeResult.error.message).toContain('Cannot remove the last image from album');
+        expect(removeResult.error.message).toContain(
+          'Cannot remove the last image from album'
+        );
       }
     });
 
@@ -246,15 +270,20 @@ describe('Album', () => {
       if (result.isErr()) throw result.error;
       const album = result.value;
 
-      const nonExistentImageUrlResult = ImageUrl.create('https://example.com/non-existent.jpg');
-      if (nonExistentImageUrlResult.isErr()) throw nonExistentImageUrlResult.error;
+      const nonExistentImageUrlResult = ImageUrl.create(
+        'https://example.com/non-existent.jpg'
+      );
+      if (nonExistentImageUrlResult.isErr())
+        throw nonExistentImageUrlResult.error;
       const nonExistentImageUrl = nonExistentImageUrlResult.value;
       const removeResult = album.removeImage(nonExistentImageUrl, userId);
 
       expect(removeResult.isErr()).toBe(true);
       if (removeResult.isErr()) {
         expect(removeResult.error).toBeInstanceOf(EntityValidationError);
-        expect(removeResult.error.message).toContain('Image URL not found in album');
+        expect(removeResult.error.message).toContain(
+          'Image URL not found in album'
+        );
       }
     });
   });
@@ -313,7 +342,7 @@ describe('Album', () => {
       const album1Result = Album.create(coordinate, imageUrls, userId);
       if (album1Result.isErr()) throw album1Result.error;
       const album1 = album1Result.value;
-      
+
       // reconstruct で同じIDのアルバムを作成
       const album2 = Album.reconstruct(
         album1.id,
@@ -360,7 +389,10 @@ describe('Album', () => {
       expect(json).toHaveProperty('createdAt');
       expect(json).toHaveProperty('updatedAt');
       expect(json.imageUrls).toHaveLength(2);
-      expect(json.coordinate).toEqual({ latitude: 35.6762, longitude: 139.6503 });
+      expect(json.coordinate).toEqual({
+        latitude: 35.6762,
+        longitude: 139.6503,
+      });
     });
   });
 });

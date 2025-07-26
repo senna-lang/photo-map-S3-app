@@ -45,15 +45,17 @@ describe('AlbumId', () => {
         '123e4567-e89b-12d3-a456-426614174000-extra', // 長すぎる
         '123e4567-e89b-12d3-a456-42661417400g', // 無効な文字
         '', // 空文字
-        'not-a-uuid-at-all'
+        'not-a-uuid-at-all',
       ];
 
-      invalidUuids.forEach(uuid => {
+      invalidUuids.forEach((uuid) => {
         const result = AlbumId.create(uuid);
         expect(result.isErr()).toBe(true);
         if (result.isErr()) {
           expect(result.error).toBeInstanceOf(ValidationError);
-          expect(result.error.message).toContain('Invalid UUID format for AlbumId');
+          expect(result.error.message).toContain(
+            'Invalid UUID format for AlbumId'
+          );
         }
       });
     });
@@ -62,22 +64,23 @@ describe('AlbumId', () => {
   describe('generate', () => {
     it('有効なUUIDを生成する', () => {
       const albumId = AlbumId.generate();
-      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
-      
+      const uuidRegex =
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
       expect(uuidRegex.test(albumId.value)).toBe(true);
     });
 
     it('毎回異なるUUIDを生成する', () => {
       const albumId1 = AlbumId.generate();
       const albumId2 = AlbumId.generate();
-      
+
       expect(albumId1.equals(albumId2)).toBe(false);
     });
 
     it('生成されたUUIDはバージョン4である', () => {
       const albumId = AlbumId.generate();
       const parts = albumId.value.split('-');
-      
+
       // UUIDv4の特徴：3番目のセクションの最初の文字が4
       expect(parts[2][0]).toBe('4');
     });
@@ -97,10 +100,14 @@ describe('AlbumId', () => {
     });
 
     it('異なるUUIDの場合falseを返す', () => {
-      const albumId1Result = AlbumId.create('123e4567-e89b-12d3-a456-426614174000');
+      const albumId1Result = AlbumId.create(
+        '123e4567-e89b-12d3-a456-426614174000'
+      );
       if (albumId1Result.isErr()) throw albumId1Result.error;
       const albumId1 = albumId1Result.value;
-      const albumId2Result = AlbumId.create('f47ac10b-58cc-4372-a567-0e02b2c3d479');
+      const albumId2Result = AlbumId.create(
+        'f47ac10b-58cc-4372-a567-0e02b2c3d479'
+      );
       if (albumId2Result.isErr()) throw albumId2Result.error;
       const albumId2 = albumId2Result.value;
 

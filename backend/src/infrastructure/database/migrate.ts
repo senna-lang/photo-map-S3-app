@@ -18,14 +18,16 @@ const __dirname = dirname(__filename);
  */
 async function runMigrations(): Promise<void> {
   const connectionString = process.env.DATABASE_URL;
-  
+
   if (!connectionString) {
     console.error('DATABASE_URL environment variable is required');
     process.exit(1);
   }
 
   console.log('🔄 Starting database migration...');
-  console.log(`📍 Connection: ${connectionString.replace(/:[^:@]*@/, ':***@')}`);
+  console.log(
+    `📍 Connection: ${connectionString.replace(/:[^:@]*@/, ':***@')}`
+  );
 
   // マイグレーション専用の接続（max: 1）
   const migrationConnection = postgres(connectionString, { max: 1 });
@@ -34,14 +36,13 @@ async function runMigrations(): Promise<void> {
   try {
     // マイグレーションディレクトリのパス
     const migrationsFolder = join(__dirname, '../../../drizzle');
-    
+
     console.log(`📁 Migrations folder: ${migrationsFolder}`);
-    
+
     // マイグレーション実行
     await migrate(db, { migrationsFolder });
-    
+
     console.log('✅ Database migration completed successfully!');
-    
   } catch (error) {
     console.error('❌ Migration failed:', error);
     process.exit(1);
@@ -56,18 +57,19 @@ async function runMigrations(): Promise<void> {
  */
 async function testConnection(): Promise<void> {
   const connectionString = process.env.DATABASE_URL;
-  
+
   if (!connectionString) {
     console.error('DATABASE_URL environment variable is required');
     process.exit(1);
   }
 
   console.log('🔄 Testing database connection...');
-  
+
   const testConnection = postgres(connectionString, { max: 1 });
 
   try {
-    const result = await testConnection`SELECT version() as version, now() as current_time`;
+    const result =
+      await testConnection`SELECT version() as version, now() as current_time`;
     console.log('✅ Database connection successful!');
     console.log(`📊 PostgreSQL version: ${result[0].version}`);
     console.log(`🕐 Current time: ${result[0].current_time}`);

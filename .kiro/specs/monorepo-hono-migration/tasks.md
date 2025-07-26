@@ -1,16 +1,13 @@
 # Implementation Plan
 
 - [ ] 1. Set up monorepo structure and workspace configuration
-
   - Create root package.json with workspace configuration for frontend, backend, and shared packages
   - Set up TypeScript configuration with project references for monorepo
   - Configure ESLint and Prettier for consistent code formatting across packages
   - _Requirements: 1.1, 1.3_
 
 - [ ] 2. Create shared package with types and schemas
-
   - [ ] 2.1 Implement Zod schemas for data validation
-
     - Create coordinate validation schema with lng/lat bounds checking
     - Create album creation and response schemas with proper validation rules
     - Create user and authentication schemas for type safety
@@ -23,16 +20,13 @@
     - _Requirements: 1.5, 4.2_
 
 - [ ] 3. Set up backend foundation with Hono and DDD structure
-
   - [ ] 3.1 Initialize Hono project with DDD directory structure
-
     - Create domain, application, infrastructure, and presentation layers
     - Set up dependency injection container for clean architecture
     - Configure TypeScript build and development scripts
     - _Requirements: 2.1, 2.2_
 
   - [ ] 3.2 Configure Drizzle ORM with database schema
-
     - Define database schema for users and albums tables using Drizzle
     - Set up database connection and migration configuration
     - Create database seeding scripts for development
@@ -48,9 +42,7 @@
     - _Requirements: 2.2, 4.3_
 
 - [ ] 4. Implement authentication system
-
   - [ ] 4.1 Create JWT-based authentication service
-
     - Implement JWT token generation and validation utilities
     - Create authentication middleware for protected routes
     - Set up refresh token mechanism for session management
@@ -64,9 +56,7 @@
     - _Requirements: 3.1, 3.5_
 
 - [ ] 5. Build repository layer with Drizzle ORM
-
   - [ ] 5.1 Implement AlbumRepository with CRUD operations using neverthrow
-
     - ✅ Create repository interface following DDD principles with Result return types
     - [ ] Implement Drizzle-based repository with type-safe queries returning Results
     - [ ] Add proper error handling for database operations using neverthrow
@@ -81,9 +71,7 @@
     - _Requirements: 3.1, 3.3_
 
 - [ ] 6. Create application layer use cases
-
   - [ ] 6.1 Implement album management use cases with neverthrow
-
     - Create GetAllAlbumsUseCase with proper data transformation returning Results
     - Create CreateAlbumUseCase with validation and authorization using neverthrow
     - Create DeleteAlbumUseCase with ownership verification returning Results
@@ -98,9 +86,7 @@
     - _Requirements: 3.1, 3.2, 3.3_
 
 - [ ] 7. Set up tRPC integration with Hono
-
   - [ ] 7.1 Create tRPC router with album procedures
-
     - Set up tRPC router with public and protected procedures
     - Implement album.getAll query procedure
     - Implement album.create and album.delete mutation procedures
@@ -108,7 +94,6 @@
     - _Requirements: 4.1, 4.4_
 
   - [ ] 7.2 Create authentication procedures and middleware
-
     - Implement auth.signIn and auth.signOut procedures
     - Create authentication middleware for protected procedures
     - Add user context injection for authenticated requests
@@ -123,9 +108,7 @@
     - _Requirements: 2.5, 7.1_
 
 - [ ] 8. Create Vite + React frontend foundation
-
   - [ ] 8.1 Initialize Vite project with React and TypeScript
-
     - Set up Vite configuration with proper build optimization
     - Configure TypeScript for React development
     - Set up development server with proxy for backend API
@@ -133,7 +116,6 @@
     - _Requirements: 6.1, 6.4_
 
   - [ ] 8.2 Set up tRPC client integration
-
     - Install and configure tRPC React client
     - Set up React Query provider for data fetching
     - Create tRPC client with proper authentication headers
@@ -148,9 +130,7 @@
     - _Requirements: 6.5, 5.4_
 
 - [ ] 9. Migrate existing React components
-
   - [ ] 9.1 Convert Map component to use tRPC
-
     - Migrate Mapbox component from Next.js to Vite setup
     - Update data fetching to use tRPC album.getAll query
     - Maintain existing map functionality and marker rendering
@@ -158,7 +138,6 @@
     - _Requirements: 5.1, 5.2_
 
   - [ ] 9.2 Convert authentication components
-
     - Migrate AuthButton component to use tRPC auth procedures
     - Update authentication state management with React Query
     - Implement proper sign-in and sign-out flows
@@ -173,9 +152,7 @@
     - _Requirements: 5.3, 4.3_
 
 - [ ] 10. Implement state management migration
-
   - [ ] 10.1 Replace Zustand with React Query state
-
     - Remove Zustand store and migrate state to React Query
     - Implement proper cache management for album data
     - Add optimistic updates for create and delete operations
@@ -190,9 +167,7 @@
     - _Requirements: 3.3, 5.4_
 
 - [ ] 11. Add comprehensive error handling
-
   - [ ] 11.1 Implement backend error handling
-
     - Create domain-specific error classes and handling
     - Add global error middleware for Hono server
     - Implement proper HTTP status codes for different error types
@@ -207,9 +182,7 @@
     - _Requirements: 5.5, 6.5_
 
 - [ ] 12. Write comprehensive tests
-
   - [ ] 12.1 Add backend unit and integration tests with Vitest
-
     - Write unit tests for domain entities and use cases using Vitest
     - Create integration tests for repository implementations with Vitest
     - Add API endpoint tests with test database using Vitest
@@ -224,9 +197,7 @@
     - _Requirements: 5.1, 5.2, 6.1_
 
 - [ ] 13. Optimize and finalize migration
-
   - [ ] 13.1 Optimize build and bundle configuration
-
     - Configure Vite build optimization for production
     - Set up code splitting and lazy loading for better performance
     - Optimize backend build and deployment configuration

@@ -16,7 +16,7 @@ export class ImageUrl {
     // URL形式の検証
     try {
       const urlObject = new URL(url);
-      
+
       // HTTPSまたはHTTPのみ許可
       if (!['http:', 'https:'].includes(urlObject.protocol)) {
         return err(new InvalidUrlFormatError(url));
@@ -25,10 +25,14 @@ export class ImageUrl {
       // 画像ファイル拡張子の検証（オプション）
       const validExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
       const pathname = urlObject.pathname.toLowerCase();
-      const hasValidExtension = validExtensions.some(ext => pathname.endsWith(ext));
-      
+      const hasValidExtension = validExtensions.some((ext) =>
+        pathname.endsWith(ext)
+      );
+
       if (!hasValidExtension) {
-        return err(new InvalidUrlFormatError(`${url} - must be a valid image file`));
+        return err(
+          new InvalidUrlFormatError(`${url} - must be a valid image file`)
+        );
       }
 
       return ok(new ImageUrl(url as ImageUrlValue));

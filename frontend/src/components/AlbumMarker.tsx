@@ -59,9 +59,7 @@ export default function AlbumMarker({ album }: AlbumMarkerProps) {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center space-x-2 text-sm text-gray-600">
                 <Calendar className="w-4 h-4" />
-                <span>
-                  {new Date(album.createdAt).toLocaleDateString()}
-                </span>
+                <span>{new Date(album.createdAt).toLocaleDateString()}</span>
               </div>
               <button
                 onClick={() => setShowPopup(false)}
@@ -74,8 +72,8 @@ export default function AlbumMarker({ album }: AlbumMarkerProps) {
             {/* Images Grid */}
             <div className="grid grid-cols-2 gap-2 mb-3">
               {album.imageUrls.slice(0, 4).map((imageUrl, index) => (
-                <div 
-                  key={index} 
+                <div
+                  key={index}
                   className="aspect-square overflow-hidden rounded-lg bg-gray-100"
                 >
                   <img
@@ -98,7 +96,8 @@ export default function AlbumMarker({ album }: AlbumMarkerProps) {
             {/* Coordinates */}
             <div className="text-xs text-gray-500 mb-3">
               <p>
-                📍 {album.coordinate.lat.toFixed(6)}, {album.coordinate.lng.toFixed(6)}
+                📍 {album.coordinate.lat.toFixed(6)},{' '}
+                {album.coordinate.lng.toFixed(6)}
               </p>
             </div>
 

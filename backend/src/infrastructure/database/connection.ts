@@ -22,7 +22,7 @@ interface DatabaseConfig {
  */
 function getDatabaseConfig(): DatabaseConfig {
   const connectionString = process.env.DATABASE_URL;
-  
+
   if (!connectionString) {
     throw new Error('DATABASE_URL environment variable is required');
   }
@@ -46,7 +46,7 @@ let sql: postgres.Sql | null = null;
 function getConnection(): postgres.Sql {
   if (!sql) {
     const config = getDatabaseConfig();
-    
+
     sql = postgres(config.connectionString, {
       ssl: config.ssl,
       max: config.max,
@@ -54,10 +54,11 @@ function getConnection(): postgres.Sql {
       // 開発環境では詳細なログを出力
       debug: process.env.NODE_ENV === 'development',
       // 接続プールの設定
-      onnotice: process.env.NODE_ENV === 'development' ? console.log : undefined,
+      onnotice:
+        process.env.NODE_ENV === 'development' ? console.log : undefined,
     });
   }
-  
+
   return sql;
 }
 
@@ -99,16 +100,16 @@ export async function clearDatabase(): Promise<void> {
   if (process.env.NODE_ENV === 'production') {
     throw new Error('Cannot clear database in production environment');
   }
-  
+
   const connection = getConnection();
-  
+
   // 外部キー制約を一時的に無効化
   await connection`SET session_replication_role = replica`;
-  
+
   // テーブルをクリア（順序が重要）
   await connection`DELETE FROM albums`;
   await connection`DELETE FROM users`;
-  
+
   // 外部キー制約を再有効化
   await connection`SET session_replication_role = DEFAULT`;
 }

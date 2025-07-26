@@ -16,10 +16,13 @@
     "lint": "npm run lint --workspace=frontend && npm run lint --workspace=backend",
     "test": "npm run test --workspace=frontend && npm run test --workspace=backend",
     "clean": "npm run clean --workspace=frontend && npm run clean --workspace=backend",
-    "typecheck": "npm run typecheck --workspace=frontend && npm run typecheck --workspace=backend"
+    "typecheck": "npm run typecheck --workspace=frontend && npm run typecheck --workspace=backend",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "devDependencies": {
     "concurrently": "^8.2.2",
+    "prettier": "^3.6.2",
     "typescript": "^5.0.0"
   }
 }

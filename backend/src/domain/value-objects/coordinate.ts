@@ -16,7 +16,10 @@ export class Coordinate {
     private readonly _longitude: Longitude
   ) {}
 
-  static create(latitude: number, longitude: number): Result<Coordinate, CoordinateOutOfBoundsError> {
+  static create(
+    latitude: number,
+    longitude: number
+  ): Result<Coordinate, CoordinateOutOfBoundsError> {
     // 緯度の範囲チェック (-90 to 90)
     if (latitude < -90 || latitude > 90) {
       return err(new CoordinateOutOfBoundsError('latitude', latitude, -90, 90));
@@ -24,13 +27,12 @@ export class Coordinate {
 
     // 経度の範囲チェック (-180 to 180)
     if (longitude < -180 || longitude > 180) {
-      return err(new CoordinateOutOfBoundsError('longitude', longitude, -180, 180));
+      return err(
+        new CoordinateOutOfBoundsError('longitude', longitude, -180, 180)
+      );
     }
 
-    return ok(new Coordinate(
-      latitude as Latitude,
-      longitude as Longitude
-    ));
+    return ok(new Coordinate(latitude as Latitude, longitude as Longitude));
   }
 
   get latitude(): number {
@@ -48,12 +50,14 @@ export class Coordinate {
     const R = 6371; // 地球の半径（km）
     const dLat = this.toRadians(other.latitude - this.latitude);
     const dLon = this.toRadians(other.longitude - this.longitude);
-    
-    const a = 
+
+    const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRadians(this.latitude)) * Math.cos(this.toRadians(other.latitude)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2);
-    
+      Math.cos(this.toRadians(this.latitude)) *
+        Math.cos(this.toRadians(other.latitude)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   }
@@ -66,7 +70,9 @@ export class Coordinate {
    * 座標の等価性チェック
    */
   equals(other: Coordinate): boolean {
-    return this.latitude === other.latitude && this.longitude === other.longitude;
+    return (
+      this.latitude === other.latitude && this.longitude === other.longitude
+    );
   }
 
   /**
@@ -82,7 +88,7 @@ export class Coordinate {
   toJSON(): { latitude: number; longitude: number } {
     return {
       latitude: this.latitude,
-      longitude: this.longitude
+      longitude: this.longitude,
     };
   }
 }

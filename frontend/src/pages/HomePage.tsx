@@ -5,7 +5,8 @@ import AlbumForm from '../components/AlbumForm';
 import { useAuthStore } from '../stores/auth-store';
 
 export default function HomePage() {
-  const { albums, fetchAlbums, selectedCoordinate, isLoading, error } = useAlbumStore();
+  const { albums, fetchAlbums, selectedCoordinate, isLoading, error } =
+    useAlbumStore();
   const { isAuthenticated } = useAuthStore();
 
   useEffect(() => {
@@ -31,14 +32,14 @@ export default function HomePage() {
   return (
     <div className="relative h-screen">
       <MapComponent albums={albums} isLoading={isLoading} />
-      
+
       {/* Album creation form - only show if authenticated and coordinate selected */}
       {isAuthenticated && selectedCoordinate && (
         <div className="absolute top-4 right-4 z-10">
           <AlbumForm coordinate={selectedCoordinate} />
         </div>
       )}
-      
+
       {/* Instructions overlay */}
       {!selectedCoordinate && (
         <div className="absolute top-4 left-4 z-10 bg-white rounded-lg shadow-lg p-4 max-w-sm">

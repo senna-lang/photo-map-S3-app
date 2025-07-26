@@ -34,10 +34,10 @@ describe('ImageUrl', () => {
         'https://example.com/image.jpeg',
         'https://example.com/image.png',
         'https://example.com/image.gif',
-        'https://example.com/image.webp'
+        'https://example.com/image.webp',
       ];
 
-      urls.forEach(url => {
+      urls.forEach((url) => {
         const result = ImageUrl.create(url);
         expect(result.isOk()).toBe(true);
       });
@@ -48,10 +48,10 @@ describe('ImageUrl', () => {
         'invalid-url',
         'ftp://example.com/image.jpg',
         'not-a-url-at-all',
-        ''
+        '',
       ];
 
-      invalidUrls.forEach(url => {
+      invalidUrls.forEach((url) => {
         const result = ImageUrl.create(url);
         expect(result.isErr()).toBe(true);
         if (result.isErr()) {
@@ -65,10 +65,10 @@ describe('ImageUrl', () => {
         'https://example.com/document.pdf',
         'https://example.com/video.mp4',
         'https://example.com/audio.mp3',
-        'https://example.com/page.html'
+        'https://example.com/page.html',
       ];
 
-      nonImageUrls.forEach(url => {
+      nonImageUrls.forEach((url) => {
         const result = ImageUrl.create(url);
         expect(result.isErr()).toBe(true);
         if (result.isErr()) {

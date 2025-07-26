@@ -53,9 +53,7 @@ const seedAlbums = [
   },
   {
     coordinate: { latitude: 34.6937, longitude: 135.5023 }, // 大阪駅
-    imageUrls: [
-      'https://example.com/osaka-station.jpg',
-    ],
+    imageUrls: ['https://example.com/osaka-station.jpg'],
   },
   {
     coordinate: { latitude: 35.0116, longitude: 135.7681 }, // 京都駅
@@ -67,7 +65,7 @@ const seedAlbums = [
     ],
   },
   {
-    coordinate: { latitude: 35.6580, longitude: 139.7016 }, // 渋谷駅
+    coordinate: { latitude: 35.658, longitude: 139.7016 }, // 渋谷駅
     imageUrls: [
       'https://example.com/shibuya-crossing.jpg',
       'https://example.com/shibuya-night.jpg',
@@ -78,14 +76,16 @@ const seedAlbums = [
 /**
  * ユーザーデータを投入
  */
-async function seedUsersData(): Promise<Array<{ id: string; githubId: string }>> {
+async function seedUsersData(): Promise<
+  Array<{ id: string; githubId: string }>
+> {
   console.log('👤 Seeding users...');
-  
+
   const insertedUsers = await db.insert(users).values(seedUsers).returning({
     id: users.id,
     githubId: users.githubId,
   });
-  
+
   console.log(`✅ Created ${insertedUsers.length} users`);
   return insertedUsers;
 }
@@ -93,24 +93,31 @@ async function seedUsersData(): Promise<Array<{ id: string; githubId: string }>>
 /**
  * アルバムデータを投入
  */
-async function seedAlbumsData(userList: Array<{ id: string; githubId: string }>): Promise<void> {
+async function seedAlbumsData(
+  userList: Array<{ id: string; githubId: string }>
+): Promise<void> {
   console.log('📸 Seeding albums...');
-  
+
   const albumsWithUsers = seedAlbums.map((album, index) => ({
     ...album,
     userId: userList[index % userList.length].id, // ユーザーをローテーションで割り当て
   }));
-  
-  const insertedAlbums = await db.insert(albums).values(albumsWithUsers).returning({
-    id: albums.id,
-    userId: albums.userId,
-  });
-  
+
+  const insertedAlbums = await db
+    .insert(albums)
+    .values(albumsWithUsers)
+    .returning({
+      id: albums.id,
+      userId: albums.userId,
+    });
+
   console.log(`✅ Created ${insertedAlbums.length} albums`);
-  
+
   // 各ユーザーのアルバム数を表示
   for (const user of userList) {
-    const userAlbums = insertedAlbums.filter(album => album.userId === user.id);
+    const userAlbums = insertedAlbums.filter(
+      (album) => album.userId === user.id
+    );
     console.log(`  📊 User ${user.githubId}: ${userAlbums.length} albums`);
   }
 }
@@ -121,21 +128,20 @@ async function seedAlbumsData(userList: Array<{ id: string; githubId: string }>)
 async function runSeeding(): Promise<void> {
   try {
     console.log('🌱 Starting database seeding...');
-    
+
     // 既存データをクリア（開発環境のみ）
     if (process.env.NODE_ENV !== 'production') {
       console.log('🧹 Clearing existing data...');
       await clearDatabase();
     }
-    
+
     // ユーザーデータを投入
     const insertedUsers = await seedUsersData();
-    
+
     // アルバムデータを投入
     await seedAlbumsData(insertedUsers);
-    
+
     console.log('🎉 Database seeding completed successfully!');
-    
   } catch (error) {
     console.error('❌ Seeding failed:', error);
     throw error;
@@ -148,17 +154,17 @@ async function runSeeding(): Promise<void> {
 async function showStats(): Promise<void> {
   try {
     console.log('📊 Database Statistics:');
-    
+
     // ユーザー数
     const userCountResult = await db.select({ count: count() }).from(users);
     const userCount = userCountResult[0].count;
     console.log(`  👤 Users: ${userCount}`);
-    
+
     // アルバム数
     const albumCountResult = await db.select({ count: count() }).from(albums);
     const albumCount = albumCountResult[0].count;
     console.log(`  📸 Albums: ${albumCount}`);
-    
+
     // 最新のアルバム
     const latestAlbums = await db
       .select({
@@ -170,13 +176,16 @@ async function showStats(): Promise<void> {
       .from(albums)
       .orderBy(albums.createdAt)
       .limit(3);
-    
+
     console.log('  📱 Latest Albums:');
     latestAlbums.forEach((album, index) => {
-      const imageCount = Array.isArray(album.imageUrls) ? album.imageUrls.length : 0;
-      console.log(`    ${index + 1}. ${album.id} (${imageCount} images) at ${JSON.stringify(album.coordinate)}`);
+      const imageCount = Array.isArray(album.imageUrls)
+        ? album.imageUrls.length
+        : 0;
+      console.log(
+        `    ${index + 1}. ${album.id} (${imageCount} images) at ${JSON.stringify(album.coordinate)}`
+      );
     });
-    
   } catch (error) {
     console.error('❌ Failed to show stats:', error);
   }

@@ -8,10 +8,12 @@ import { Input } from './ui/input';
 import { X, Upload, MapPin, Loader2 } from 'lucide-react';
 
 const albumFormSchema = z.object({
-  files: z.instanceof(FileList).refine(
-    (files) => files.length > 0 && files.length <= 10,
-    'Please select 1-10 images'
-  ),
+  files: z
+    .instanceof(FileList)
+    .refine(
+      (files) => files.length > 0 && files.length <= 10,
+      'Please select 1-10 images'
+    ),
 });
 
 type AlbumFormData = z.infer<typeof albumFormSchema>;
@@ -23,7 +25,8 @@ interface AlbumFormProps {
 export default function AlbumForm({ coordinate }: AlbumFormProps) {
   const [isUploading, setIsUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<string>('');
-  const { createAlbum, setSelectedCoordinate, setShowPinnedMarker } = useAlbumStore();
+  const { createAlbum, setSelectedCoordinate, setShowPinnedMarker } =
+    useAlbumStore();
 
   const {
     register,
@@ -68,7 +71,7 @@ export default function AlbumForm({ coordinate }: AlbumFormProps) {
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
         setUploadProgress(`Uploading image ${i + 1} of ${files.length}...`);
-        
+
         const imageUrl = await uploadToS3(file);
         imageUrls.push(imageUrl);
       }
@@ -87,12 +90,11 @@ export default function AlbumForm({ coordinate }: AlbumFormProps) {
         setIsUploading(false);
         setUploadProgress('');
       }, 1000);
-
     } catch (error) {
       console.error('Failed to create album:', error);
       setUploadProgress('Failed to create album');
       setIsUploading(false);
-      
+
       setTimeout(() => {
         setUploadProgress('');
       }, 3000);
@@ -150,7 +152,10 @@ export default function AlbumForm({ coordinate }: AlbumFormProps) {
             </p>
             <div className="max-h-32 overflow-y-auto space-y-1">
               {Array.from(watchedFiles).map((file, index) => (
-                <div key={index} className="flex items-center space-x-2 text-sm text-gray-600">
+                <div
+                  key={index}
+                  className="flex items-center space-x-2 text-sm text-gray-600"
+                >
                   <span className="w-4 h-4 bg-green-100 rounded-full flex items-center justify-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   </span>

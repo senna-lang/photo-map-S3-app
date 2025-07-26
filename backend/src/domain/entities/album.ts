@@ -24,28 +24,42 @@ export class Album {
   ): Result<Album, EntityValidationError> {
     // ビジネスルールの検証
     if (imageUrls.length === 0) {
-      return err(new EntityValidationError('Album', 'At least one image is required'));
+      return err(
+        new EntityValidationError('Album', 'At least one image is required')
+      );
     }
 
     if (imageUrls.length > 10) {
-      return err(new EntityValidationError('Album', 'Maximum 10 images allowed per album'));
+      return err(
+        new EntityValidationError(
+          'Album',
+          'Maximum 10 images allowed per album'
+        )
+      );
     }
 
     // 重複URLの検証
-    const uniqueUrls = new Set(imageUrls.map(url => url.value));
+    const uniqueUrls = new Set(imageUrls.map((url) => url.value));
     if (uniqueUrls.size !== imageUrls.length) {
-      return err(new EntityValidationError('Album', 'Duplicate image URLs are not allowed'));
+      return err(
+        new EntityValidationError(
+          'Album',
+          'Duplicate image URLs are not allowed'
+        )
+      );
     }
 
     const now = new Date();
-    return ok(new Album(
-      AlbumId.generate(),
-      coordinate,
-      [...imageUrls], // 防御的コピー
-      userId,
-      now,
-      now
-    ));
+    return ok(
+      new Album(
+        AlbumId.generate(),
+        coordinate,
+        [...imageUrls], // 防御的コピー
+        userId,
+        now,
+        now
+      )
+    );
   }
 
   static reconstruct(
@@ -87,7 +101,10 @@ export class Album {
   /**
    * 画像を追加する
    */
-  addImage(imageUrl: ImageUrl, requestUserId: UserId): Result<void, EntityValidationError | UnauthorizedError> {
+  addImage(
+    imageUrl: ImageUrl,
+    requestUserId: UserId
+  ): Result<void, EntityValidationError | UnauthorizedError> {
     // 所有者チェック
     if (!this.isOwnedBy(requestUserId)) {
       return err(new UnauthorizedError('Only the album owner can add images'));
@@ -95,12 +112,19 @@ export class Album {
 
     // 最大数チェック
     if (this._imageUrls.length >= 10) {
-      return err(new EntityValidationError('Album', 'Maximum 10 images allowed per album'));
+      return err(
+        new EntityValidationError(
+          'Album',
+          'Maximum 10 images allowed per album'
+        )
+      );
     }
 
     // 重複チェック
-    if (this._imageUrls.some(url => url.equals(imageUrl))) {
-      return err(new EntityValidationError('Album', 'Image URL already exists in album'));
+    if (this._imageUrls.some((url) => url.equals(imageUrl))) {
+      return err(
+        new EntityValidationError('Album', 'Image URL already exists in album')
+      );
     }
 
     this._imageUrls.push(imageUrl);
@@ -111,20 +135,32 @@ export class Album {
   /**
    * 画像を削除する
    */
-  removeImage(imageUrl: ImageUrl, requestUserId: UserId): Result<void, EntityValidationError | UnauthorizedError> {
+  removeImage(
+    imageUrl: ImageUrl,
+    requestUserId: UserId
+  ): Result<void, EntityValidationError | UnauthorizedError> {
     // 所有者チェック
     if (!this.isOwnedBy(requestUserId)) {
-      return err(new UnauthorizedError('Only the album owner can remove images'));
+      return err(
+        new UnauthorizedError('Only the album owner can remove images')
+      );
     }
 
-    const index = this._imageUrls.findIndex(url => url.equals(imageUrl));
+    const index = this._imageUrls.findIndex((url) => url.equals(imageUrl));
     if (index === -1) {
-      return err(new EntityValidationError('Album', 'Image URL not found in album'));
+      return err(
+        new EntityValidationError('Album', 'Image URL not found in album')
+      );
     }
 
     // 最後の画像は削除できない
     if (this._imageUrls.length === 1) {
-      return err(new EntityValidationError('Album', 'Cannot remove the last image from album'));
+      return err(
+        new EntityValidationError(
+          'Album',
+          'Cannot remove the last image from album'
+        )
+      );
     }
 
     this._imageUrls.splice(index, 1);
@@ -174,10 +210,10 @@ export class Album {
     return {
       id: this._id.value,
       coordinate: this._coordinate.toJSON(),
-      imageUrls: this._imageUrls.map(url => url.value),
+      imageUrls: this._imageUrls.map((url) => url.value),
       userId: this._userId.value,
       createdAt: this._createdAt.toISOString(),
-      updatedAt: this._updatedAt.toISOString()
+      updatedAt: this._updatedAt.toISOString(),
     };
   }
 }

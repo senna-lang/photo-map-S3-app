@@ -68,7 +68,9 @@ describe('User', () => {
       expect(result.isErr()).toBe(true);
       if (result.isErr()) {
         expect(result.error).toBeInstanceOf(EntityValidationError);
-        expect(result.error.message).toContain('Username must be 39 characters or less');
+        expect(result.error.message).toContain(
+          'Username must be 39 characters or less'
+        );
       }
     });
 
@@ -78,15 +80,17 @@ describe('User', () => {
         'user name',
         'user.name',
         'user#name',
-        'user_name'
+        'user_name',
       ];
 
-      invalidUsernames.forEach(username => {
+      invalidUsernames.forEach((username) => {
         const result = User.create('12345', username);
         expect(result.isErr()).toBe(true);
         if (result.isErr()) {
           expect(result.error).toBeInstanceOf(EntityValidationError);
-          expect(result.error.message).toContain('Username can only contain alphanumeric characters and hyphens');
+          expect(result.error.message).toContain(
+            'Username can only contain alphanumeric characters and hyphens'
+          );
         }
       });
     });
@@ -98,10 +102,10 @@ describe('User', () => {
         'test123',
         'TEST-USER',
         'a',
-        '123'
+        '123',
       ];
 
-      validUsernames.forEach(username => {
+      validUsernames.forEach((username) => {
         const result = User.create('12345', username);
         expect(result.isOk()).toBe(true);
       });
@@ -123,7 +127,9 @@ describe('User', () => {
       expect(result.isOk()).toBe(true);
       if (result.isOk()) {
         expect(result.value.id.value).toBeDefined();
-        expect(result.value.id.value).toMatch(/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
+        expect(result.value.id.value).toMatch(
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+        );
       }
     });
   });
@@ -132,7 +138,12 @@ describe('User', () => {
     let user: User;
 
     beforeEach(() => {
-      const result = User.create('12345', 'testuser', 'https://github.com/testuser.png', 'Test User');
+      const result = User.create(
+        '12345',
+        'testuser',
+        'https://github.com/testuser.png',
+        'Test User'
+      );
       if (result.isErr()) throw result.error;
       user = result.value;
     });
@@ -179,7 +190,9 @@ describe('User', () => {
       expect(result.isErr()).toBe(true);
       if (result.isErr()) {
         expect(result.error).toBeInstanceOf(EntityValidationError);
-        expect(result.error.message).toContain('Username can only contain alphanumeric characters and hyphens');
+        expect(result.error.message).toContain(
+          'Username can only contain alphanumeric characters and hyphens'
+        );
       }
     });
 
@@ -258,7 +271,12 @@ describe('User', () => {
 
   describe('toJSON', () => {
     it('正しいJSON形式を返す', () => {
-      const userResult = User.create('12345', 'testuser', 'https://github.com/testuser.png', 'Test User');
+      const userResult = User.create(
+        '12345',
+        'testuser',
+        'https://github.com/testuser.png',
+        'Test User'
+      );
       if (userResult.isErr()) throw userResult.error;
       const user = userResult.value;
       const json = user.toJSON();
@@ -266,7 +284,10 @@ describe('User', () => {
       expect(json).toHaveProperty('id');
       expect(json).toHaveProperty('githubId', '12345');
       expect(json).toHaveProperty('username', 'testuser');
-      expect(json).toHaveProperty('avatarUrl', 'https://github.com/testuser.png');
+      expect(json).toHaveProperty(
+        'avatarUrl',
+        'https://github.com/testuser.png'
+      );
       expect(json).toHaveProperty('name', 'Test User');
       expect(json).toHaveProperty('createdAt');
       expect(json).toHaveProperty('updatedAt');

@@ -34,7 +34,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => ({
 
   signIn: async (code: string) => {
     set({ isLoading: true, error: null });
-    
+
     try {
       const result = await api.auth.signIn(code);
       set({
@@ -56,7 +56,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => ({
 
   signOut: async () => {
     set({ isLoading: true, error: null });
-    
+
     try {
       await api.auth.signOut();
       set({
@@ -89,7 +89,7 @@ export const useAuthStore = create<AuthState & AuthActions>((set, get) => ({
     }
 
     set({ isLoading: true, error: null });
-    
+
     try {
       const user = await api.auth.getCurrentUser();
       set({

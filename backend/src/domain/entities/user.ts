@@ -39,14 +39,25 @@ export class User {
       return err(new EntityValidationError('User', 'Username is required'));
     }
 
-    if (username.length > 39) { // GitHubの最大ユーザー名長
-      return err(new EntityValidationError('User', 'Username must be 39 characters or less'));
+    if (username.length > 39) {
+      // GitHubの最大ユーザー名長
+      return err(
+        new EntityValidationError(
+          'User',
+          'Username must be 39 characters or less'
+        )
+      );
     }
 
     // GitHubユーザー名の形式検証（英数字とハイフンのみ）
     const usernameRegex = /^[a-zA-Z0-9-]+$/;
     if (!usernameRegex.test(username)) {
-      return err(new EntityValidationError('User', 'Username can only contain alphanumeric characters and hyphens'));
+      return err(
+        new EntityValidationError(
+          'User',
+          'Username can only contain alphanumeric characters and hyphens'
+        )
+      );
     }
 
     // アバターURLの検証
@@ -56,20 +67,24 @@ export class User {
         new URL(avatarUrl); // URL形式の検証
         validatedAvatarUrl = avatarUrl as AvatarUrl;
       } catch {
-        return err(new EntityValidationError('User', 'Invalid avatar URL format'));
+        return err(
+          new EntityValidationError('User', 'Invalid avatar URL format')
+        );
       }
     }
 
     const now = new Date();
-    return ok(new User(
-      UserId.generate(),
-      githubId as GitHubId,
-      username as Username,
-      validatedAvatarUrl,
-      name || null,
-      now,
-      now
-    ));
+    return ok(
+      new User(
+        UserId.generate(),
+        githubId as GitHubId,
+        username as Username,
+        validatedAvatarUrl,
+        name || null,
+        now,
+        now
+      )
+    );
   }
 
   static reconstruct(
@@ -136,12 +151,22 @@ export class User {
       }
 
       if (username.length > 39) {
-        return err(new EntityValidationError('User', 'Username must be 39 characters or less'));
+        return err(
+          new EntityValidationError(
+            'User',
+            'Username must be 39 characters or less'
+          )
+        );
       }
 
       const usernameRegex = /^[a-zA-Z0-9-]+$/;
       if (!usernameRegex.test(username)) {
-        return err(new EntityValidationError('User', 'Username can only contain alphanumeric characters and hyphens'));
+        return err(
+          new EntityValidationError(
+            'User',
+            'Username can only contain alphanumeric characters and hyphens'
+          )
+        );
       }
 
       this._username = username as Username;
@@ -156,7 +181,9 @@ export class User {
           new URL(avatarUrl);
           this._avatarUrl = avatarUrl as AvatarUrl;
         } catch {
-          return err(new EntityValidationError('User', 'Invalid avatar URL format'));
+          return err(
+            new EntityValidationError('User', 'Invalid avatar URL format')
+          );
         }
       }
     }
@@ -210,7 +237,7 @@ export class User {
       avatarUrl: this._avatarUrl,
       name: this._name,
       createdAt: this._createdAt.toISOString(),
-      updatedAt: this._updatedAt.toISOString()
+      updatedAt: this._updatedAt.toISOString(),
     };
   }
 }

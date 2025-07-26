@@ -12,11 +12,11 @@ interface MapComponentProps {
 }
 
 export default function MapComponent({ albums, isLoading }: MapComponentProps) {
-  const { 
-    selectedCoordinate, 
-    showPinnedMarker, 
-    setSelectedCoordinate, 
-    setShowPinnedMarker 
+  const {
+    selectedCoordinate,
+    showPinnedMarker,
+    setSelectedCoordinate,
+    setShowPinnedMarker,
   } = useAlbumStore();
   const { isAuthenticated } = useAuthStore();
 

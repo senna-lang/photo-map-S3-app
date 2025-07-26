@@ -15,13 +15,13 @@ export default defineConfig({
         'tests/',
         'src/index.ts',
         'drizzle.config.ts',
-        'vitest.config.ts'
-      ]
-    }
+        'vitest.config.ts',
+      ],
+    },
   },
   resolve: {
     alias: {
-      '@': '/src'
-    }
-  }
+      '@': '/src',
+    },
+  },
 });

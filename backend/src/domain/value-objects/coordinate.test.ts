@@ -40,7 +40,9 @@ describe('Coordinate', () => {
       expect(result2.isErr()).toBe(true);
       if (result2.isErr()) {
         expect(result2.error).toBeInstanceOf(CoordinateOutOfBoundsError);
-        expect(result2.error.message).toContain('latitude -91 is out of bounds');
+        expect(result2.error.message).toContain(
+          'latitude -91 is out of bounds'
+        );
       }
     });
 
@@ -49,14 +51,18 @@ describe('Coordinate', () => {
       expect(result1.isErr()).toBe(true);
       if (result1.isErr()) {
         expect(result1.error).toBeInstanceOf(CoordinateOutOfBoundsError);
-        expect(result1.error.message).toContain('longitude 181 is out of bounds');
+        expect(result1.error.message).toContain(
+          'longitude 181 is out of bounds'
+        );
       }
 
       const result2 = Coordinate.create(0, -181);
       expect(result2.isErr()).toBe(true);
       if (result2.isErr()) {
         expect(result2.error).toBeInstanceOf(CoordinateOutOfBoundsError);
-        expect(result2.error.message).toContain('longitude -181 is out of bounds');
+        expect(result2.error.message).toContain(
+          'longitude -181 is out of bounds'
+        );
       }
     });
   });
@@ -131,7 +137,7 @@ describe('Coordinate', () => {
 
       expect(json).toEqual({
         latitude: 35.6762,
-        longitude: 139.6503
+        longitude: 139.6503,
       });
     });
   });

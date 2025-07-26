@@ -5,6 +5,7 @@ export default {
   out: './drizzle',
   dialect: 'postgresql',
   dbCredentials: {
-    url: process.env.DATABASE_URL || 'postgresql://localhost:5432/photo_map_dev',
+    url:
+      process.env.DATABASE_URL || 'postgresql://localhost:5432/photo_map_dev',
   },
 } satisfies Config;

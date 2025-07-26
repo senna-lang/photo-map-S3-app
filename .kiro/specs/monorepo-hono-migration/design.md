@@ -217,7 +217,10 @@ class Album {
 
 // Value Objects
 class Coordinate {
-  constructor(private lng: number, private lat: number) {
+  constructor(
+    private lng: number,
+    private lat: number
+  ) {
     this.validate();
   }
 }
@@ -243,7 +246,7 @@ class GetAllAlbumsUseCase {
 
   async execute(): Promise<AlbumResponseDto[]> {
     const albums = await this.albumRepository.findAll();
-    return albums.map(album => this.toDto(album));
+    return albums.map((album) => this.toDto(album));
   }
 }
 
@@ -260,7 +263,7 @@ class CreateAlbumUseCase {
     const album = new Album(
       AlbumId.generate(),
       new Coordinate(request.coordinate.lng, request.coordinate.lat),
-      request.imageUrls.map(url => new ImageUrl(url)),
+      request.imageUrls.map((url) => new ImageUrl(url)),
       userId,
       new Date()
     );
@@ -287,7 +290,7 @@ class AlbumController {
   }
 
   async create(c: Context): Promise<Response> {
-    const userId = c.get("userId");
+    const userId = c.get('userId');
     const request = await c.req.json();
     const album = await this.createAlbumUseCase.execute(request, userId);
     return c.json(album, 201);
@@ -301,27 +304,27 @@ class AlbumController {
 
 ```typescript
 // Database schema definition
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  githubId: varchar("github_id", { length: 255 }).unique().notNull(),
-  username: varchar("username", { length: 255 }).notNull(),
-  avatarUrl: varchar("avatar_url", { length: 500 }),
-  name: varchar("name", { length: 255 }),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+export const users = pgTable('users', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  githubId: varchar('github_id', { length: 255 }).unique().notNull(),
+  username: varchar('username', { length: 255 }).notNull(),
+  avatarUrl: varchar('avatar_url', { length: 500 }),
+  name: varchar('name', { length: 255 }),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 
-export const albums = pgTable("albums", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
+export const albums = pgTable('albums', {
+  id: uuid('id').primaryKey().defaultRandom(),
+  userId: uuid('user_id')
     .references(() => users.id)
     .notNull(),
-  coordinate: json("coordinate")
+  coordinate: json('coordinate')
     .$type<{ lng: number; lat: number }>()
     .notNull(),
-  imageUrls: json("image_urls").$type<string[]>().notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  imageUrls: json('image_urls').$type<string[]>().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+  updatedAt: timestamp('updated_at').defaultNow().notNull(),
 });
 ```
 
@@ -366,7 +369,7 @@ export interface CreateAlbumRequest {
 class DomainError extends Error {
   constructor(message: string) {
     super(message);
-    this.name = "DomainError";
+    this.name = 'DomainError';
   }
 }
 
@@ -386,8 +389,8 @@ const errorHandler = async (err: Error, c: Context, next: Next) => {
     return c.json({ error: err.message }, 404);
   }
 
-  console.error("Unexpected error:", err);
-  return c.json({ error: "Internal server error" }, 500);
+  console.error('Unexpected error:', err);
+  return c.json({ error: 'Internal server error' }, 500);
 };
 ```
 
@@ -396,7 +399,11 @@ const errorHandler = async (err: Error, c: Context, next: Next) => {
 ```typescript
 // API client error handling
 class ApiError extends Error {
-  constructor(message: string, public status: number, public response?: any) {
+  constructor(
+    message: string,
+    public status: number,
+    public response?: any
+  ) {
     super(message);
   }
 }
@@ -427,13 +434,13 @@ class MapErrorBoundary extends Component<Props, State> {
 
 ```typescript
 // Domain entity tests
-describe("Album Entity", () => {
-  it("should create album with valid data", () => {
+describe('Album Entity', () => {
+  it('should create album with valid data', () => {
     const album = new Album(/* valid data */);
     expect(album.isValid()).toBe(true);
   });
 
-  it("should throw error for invalid coordinates", () => {
+  it('should throw error for invalid coordinates', () => {
     expect(() => new Album(/* invalid coordinates */)).toThrow(
       InvalidCoordinateError
     );
@@ -441,8 +448,8 @@ describe("Album Entity", () => {
 });
 
 // Use case tests
-describe("CreateAlbumUseCase", () => {
-  it("should create album successfully", async () => {
+describe('CreateAlbumUseCase', () => {
+  it('should create album successfully', async () => {
     const mockRepository = createMockAlbumRepository();
     const useCase = new CreateAlbumUseCase(mockRepository);
 
