@@ -1,0 +1,244 @@
+{
+  "project": "photo-map-s3-app",
+  "lastUpdated": "2025-07-26T17:40:00Z",
+  "tasks": {
+    "setup": {
+      "name": "プロジェクト環境セットアップ",
+      "status": "in_progress",
+      "priority": "high",
+      "items": [
+        {
+          "id": "database-setup",
+          "name": "PostgreSQL データベース設定",
+          "status": "pending",
+          "priority": "high",
+          "description": "ローカル開発用PostgreSQL環境の構築",
+          "blockers": ["環境変数設定", "データベース作成"]
+        },
+        {
+          "id": "env-config",
+          "name": "環境変数ファイル作成",
+          "status": "pending",
+          "priority": "high",
+          "description": "backend/.env と frontend/.env の設定",
+          "dependencies": ["database-setup"]
+        },
+        {
+          "id": "test-environment",
+          "name": "テスト環境修正",
+          "status": "pending",
+          "priority": "high",
+          "description": "データベース接続エラーの解決とテスト実行環境整備",
+          "dependencies": ["database-setup", "env-config"]
+        }
+      ]
+    },
+    "backend": {
+      "name": "バックエンド実装",
+      "status": "mostly_complete",
+      "priority": "medium",
+      "items": [
+        {
+          "id": "domain-layer",
+          "name": "ドメイン層実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "エンティティ、値オブジェクト、リポジトリインターフェースの実装",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "application-layer",
+          "name": "アプリケーション層実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "ユースケースとアプリケーションサービスの実装",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "infrastructure-layer",
+          "name": "インフラストラクチャ層実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "データベース、認証、外部サービス連携の実装",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "presentation-layer",
+          "name": "プレゼンテーション層実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "HTTPルート、ミドルウェア、コントローラーの実装",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "api-documentation",
+          "name": "APIドキュメント生成",
+          "status": "pending",
+          "priority": "medium",
+          "description": "OpenAPI仕様書の生成と保守"
+        },
+        {
+          "id": "error-handling",
+          "name": "エラーハンドリング強化",
+          "status": "pending",
+          "priority": "medium",
+          "description": "統一的なエラーレスポンスとログ記録"
+        }
+      ]
+    },
+    "frontend": {
+      "name": "フロントエンド実装",
+      "status": "basic_complete",
+      "priority": "medium",
+      "items": [
+        {
+          "id": "basic-setup",
+          "name": "基本セットアップ",
+          "status": "completed",
+          "priority": "high",
+          "description": "Vite + React + TypeScript + Tailwind CSS の設定",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "state-management",
+          "name": "状態管理実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "Zustand による認証・アルバム状態管理",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "core-components",
+          "name": "コアコンポーネント実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "Header, Map, AlbumForm, AlbumMarker コンポーネント",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "routing",
+          "name": "ルーティング実装",
+          "status": "completed",
+          "priority": "high",
+          "description": "React Router による画面遷移",
+          "completedAt": "2025-07-26"
+        },
+        {
+          "id": "test-framework",
+          "name": "テストフレームワーク導入",
+          "status": "pending",
+          "priority": "high",
+          "description": "Vitest + Testing Library のセットアップ"
+        },
+        {
+          "id": "error-boundary",
+          "name": "エラーハンドリング実装",
+          "status": "pending",
+          "priority": "medium",
+          "description": "Error Boundary とエラー状態管理"
+        },
+        {
+          "id": "loading-states",
+          "name": "ローディング状態管理",
+          "status": "pending",
+          "priority": "medium",
+          "description": "API呼び出し時のローディング表示"
+        },
+        {
+          "id": "responsive-design",
+          "name": "レスポンシブデザイン",
+          "status": "pending",
+          "priority": "medium",
+          "description": "モバイル・タブレット対応"
+        }
+      ]
+    },
+    "testing": {
+      "name": "テスト実装",
+      "status": "partial",
+      "priority": "high",
+      "items": [
+        {
+          "id": "backend-unit-tests",
+          "name": "バックエンド単体テスト",
+          "status": "failing",
+          "priority": "high",
+          "description": "157個のテストが実装済み、29個がデータベース接続エラーで失敗",
+          "issues": ["PostgreSQL接続エラー", "テストデータベース設定"]
+        },
+        {
+          "id": "frontend-unit-tests",
+          "name": "フロントエンド単体テスト",
+          "status": "not_started",
+          "priority": "high",
+          "description": "テストフレームワーク未導入"
+        },
+        {
+          "id": "integration-tests",
+          "name": "統合テスト",
+          "status": "not_started",
+          "priority": "medium",
+          "description": "API統合テストの実装"
+        },
+        {
+          "id": "e2e-tests",
+          "name": "E2Eテスト",
+          "status": "not_started",
+          "priority": "low",
+          "description": "Playwright によるE2Eテスト"
+        }
+      ]
+    },
+    "deployment": {
+      "name": "デプロイメント",
+      "status": "not_started",
+      "priority": "low",
+      "items": [
+        {
+          "id": "docker-setup",
+          "name": "Docker構成",
+          "status": "not_started",
+          "priority": "medium",
+          "description": "開発・本番環境用Dockerファイル作成"
+        },
+        {
+          "id": "ci-cd",
+          "name": "CI/CDパイプライン",
+          "status": "not_started",
+          "priority": "medium",
+          "description": "GitHub Actions によるテスト・デプロイ自動化"
+        },
+        {
+          "id": "production-config",
+          "name": "本番環境設定",
+          "status": "not_started",
+          "priority": "low",
+          "description": "本番環境用設定とセキュリティ対策"
+        }
+      ]
+    }
+  },
+  "blockers": [
+    {
+      "id": "db-connection",
+      "description": "PostgreSQL データベース接続エラー",
+      "affectedTasks": ["backend-unit-tests", "test-environment"],
+      "priority": "high",
+      "resolution": "ローカル PostgreSQL サーバーの起動または環境設定の修正が必要"
+    },
+    {
+      "id": "env-variables",
+      "description": "環境変数設定が未完了",
+      "affectedTasks": ["database-setup", "test-environment"],
+      "priority": "high",
+      "resolution": ".env ファイルの作成と適切な値の設定が必要"
+    }
+  ],
+  "progress": {
+    "overall": "75%",
+    "backend": "90%",
+    "frontend": "70%",
+    "testing": "30%",
+    "deployment": "0%"
+  }
+}

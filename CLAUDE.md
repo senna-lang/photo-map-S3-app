@@ -15,19 +15,33 @@ This is a monorepo photo mapping application that allows users to upload photos 
 - `npm run dev:backend` - Start only the backend (Hono server on port 3001)
 - `npm run build` - Build both frontend and backend
 - `npm run lint` - Lint both frontend and backend
+- `npm run test` - Run tests for both frontend and backend
+- `npm run typecheck` - Type check both frontend and backend
+- `npm run format` - Format code using Prettier
+- `npm run format:check` - Check code formatting
 - `npm run clean` - Clean build artifacts
 
 ### Backend Commands
 
 - `npm run build --workspace=backend` - Build backend TypeScript
+- `npm run test --workspace=backend` - Run backend tests (Vitest)
+- `npm run test:watch --workspace=backend` - Run backend tests in watch mode
+- `npm run typecheck --workspace=backend` - Type check backend code
+- `npm run lint --workspace=backend` - Lint backend code
 - `npm run db:generate --workspace=backend` - Generate Drizzle migrations
 - `npm run db:migrate --workspace=backend` - Run database migrations
 - `npm run db:studio --workspace=backend` - Open Drizzle Studio
+- `npm run db:seed --workspace=backend` - Seed database with test data
+- `npm run db:seed:clear --workspace=backend` - Clear seeded data
+- `npm run db:seed:stats --workspace=backend` - Show seed statistics
+- `npm run db:test --workspace=backend` - Run test database migrations
 
 ### Frontend Commands
 
 - `npm run build --workspace=frontend` - Build frontend for production
 - `npm run preview --workspace=frontend` - Preview production build
+- `npm run typecheck --workspace=frontend` - Type check frontend code
+- `npm run lint --workspace=frontend` - Lint frontend code
 
 ## Architecture
 
